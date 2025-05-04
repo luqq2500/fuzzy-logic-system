@@ -31,7 +31,10 @@ class VariableService:
                 self.variable.fuzzy_variable[ordinal] = fuzz.trimf(self.variable.fuzzy_variable.universe, param)
             elif mf_type == 'trapmf':
                 self.variable.fuzzy_variable[ordinal] = fuzz.trapmf(self.variable.fuzzy_variable.universe, param)
-    
+        
+    def getVariable(self):
+        return self.variable
+        
     def setVarUniverse(self, params):
         if (self.isValidVarParam(params)):
             self.variable.varUniverse = np.arange(params[0], params[1], params[2])
@@ -55,18 +58,6 @@ class VariableService:
             self.variable.memberUniverse = params
         else:
             raise ValueError('Membership universe incomplete.')
-
-    def isValidMemberParam(self, params):
-        mf_type = self.variable.getMfType()
-        expected_length = {'trimf': 3, 'trapmf': 4}.get(mf_type)
-        if expected_length is None:
-            return False
-        if not all(len(param) == expected_length for param in params):
-            return False
-        for param in params:
-            if any(param[i] > param[i + 1] for i in range(len(param) - 1)):
-                return False
-        return True
     
     def setVarType(self, varType):
         if (self.isValidVarType(varType)):
