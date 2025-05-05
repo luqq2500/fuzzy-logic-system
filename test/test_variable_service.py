@@ -1,114 +1,150 @@
 import pytest
 import numpy as np
-from skfuzzy.control import Antecedent, Consequent
+import skfuzzy.control as controller
+
 from service.variable_service import VariableService
 from models.variable import Variable
+from config.configs import VARIABLE_MEMBERSHIP_ORDINALS, MEMBERSHIP_FUNCTIONS, VARIABLE_TYPE
 
-# Mock Variable entity
-class MockVariable:
-    def __init__(self, name='Temperature'):
-        self.name = name
-        self.varUniverse = None
-        self.memberUniverse = None
-        self.varType = None
-        self.mf_type = None
-        self.fuzzy_variable = None
+@pytest.fixture
+def variable_service():
+    return VariableService()
 
-    def getMfType(self):
-        return self.mf_type
+def test_initiateFuzzyVariable(variable_service):
+    name = "test_variable"
+    varParams = [0, 10, 1]
+    memberParams = [[0, 3, 6], [3, 6, 9], [6, 9, 10]]
+    varType = "antecedent"
+    mf_type = "trimf"
 
-    def getVarName(self):
-        return self.name
-
-    def getVarUniverse(self):
-        return self.varUniverse
-
-    def getVarType(self):
-        return self.varType
-
-# Config-like constants
-VALID_VAR_PARAMS = [0, 10, 1]
-VALID_MEMBER_PARAMS_TRIMF = [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
-VALID_MEMBER_PARAMS_TRAPMF = [[0, 1, 2, 3], [2, 3, 4, 5], [5, 6, 7, 8]]
-
-def test_valid_var_param():
-    var = MockVariable()
-    vs = VariableService(var)
-    assert vs.isValidVarParam(VALID_VAR_PARAMS) is True
-
-def test_invalid_var_param_length():
-    var = MockVariable()
-    vs = VariableService(var)
-    assert vs.isValidVarParam([0, 10]) is False
-
-def test_invalid_var_param_range():
-    var = MockVariable()
-    vs = VariableService(var)
-    assert vs.isValidVarParam([10, 0, 1]) is False
-
-def test_set_var_universe_success():
-    var = MockVariable()
-    vs = VariableService(var)
-    vs.setVarUniverse([0, 10, 2])
-    assert np.array_equal(var.varUniverse, np.arange(0, 10, 2))
-
-def test_set_var_universe_fail():
-    var = MockVariable()
-    vs = VariableService(var)
-    with pytest.raises(ValueError):
-        vs.setVarUniverse([10, 5, 1])
-
-def test_valid_member_param_trimf():
-    var = MockVariable()
-    var.mf_type = 'trimf'
-    vs = VariableService(var)
-    assert vs.isValidMemberParam(VALID_MEMBER_PARAMS_TRIMF) is True
-
-def test_valid_member_param_trapmf():
-    var = MockVariable()
-    var.mf_type = 'trapmf'
-    vs = VariableService(var)
-    assert vs.isValidMemberParam(VALID_MEMBER_PARAMS_TRAPMF) is True
-
-def test_invalid_member_param_wrong_order():
-    var = MockVariable()
-    var.mf_type = 'trimf'
-    vs = VariableService(var)
-    bad_params = [[3, 2, 1], [4, 5, 6]]
-    assert vs.isValidMemberParam(bad_params) is False
-
-def test_set_var_type_valid():
-    var = MockVariable()
-    vs = VariableService(var)
-    vs.setVarType('antecedent')
-    assert var.varType == 'antecedent'
-
-def test_set_var_type_invalid():
-    var = MockVariable()
-    vs = VariableService(var)
-    with pytest.raises(ValueError):
-        vs.setVarType('invalid_type')
-
-def test_initialize_variable_trimf():
-    var = MockVariable()
-    vs = VariableService(var)
-    vs.initializeVariable(
-        varParams=[0, 10, 1],
-        memberParams=VALID_MEMBER_PARAMS_TRIMF,
-        varType='antecedent',
-        mf_type='trimf'
+    variable = variable_service.initiateFuzzyVariable(
+        name, varParams, memberParams, varType, mf_type
     )
-    assert isinstance(var.fuzzy_variable, Antecedent)
-    assert hasattr(var.fuzzy_variable, 'universe')
 
-def test_initialize_variable_trapmf():
-    var = MockVariable()
-    vs = VariableService(var)
-    vs.initializeVariable(
-        varParams=[0, 10, 1],
-        memberParams=VALID_MEMBER_PARAMS_TRAPMF,
-        varType='consequent',
-        mf_type='trapmf'
+    assert variable.getVarName() == name
+    assert variable.getVarType() == varType
+    assert variable.getMfType() == mf_type
+    assert isinstance(variable.fuzzy_variable, controller.Antecedent)
+    assert len(variable.membership) == len(VARIABLE_MEMBERSHIP_ORDINALS)
+
+def test_createVariable(variable_service):
+    variable_service.createVariable("test_variable")
+    assert isinstance(variable_service.variable, Variable)
+    assert variable_service.variable.getVarName() == "test_variable"
+
+def test_createFuzzyVariable_antecedent(variable_service):
+    varParams = [0, 10, 1]
+    varType = "antecedent"
+    variable_service.createVariable("test_variable")
+    variable_service.createFuzzyVariable(varParams, varType)
+    assert isinstance(variable_service.variable.fuzzy_variable, controller.Antecedent)
+
+def test_createFuzzyVariable_consequent(variable_service):
+    varParams = [0, 10, 1]
+    varType = "consequent"
+    variable_service.createVariable("test_variable")
+    variable_service.createFuzzyVariable(varParams, varType)
+    assert isinstance(variable_service.variable.fuzzy_variable, controller.Consequent)
+
+def test_createMembership(variable_service):
+    # You must set mf_type on the variable before creating membership
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+    variable_service.createFuzzyVariable([0, 10, 1], "antecedent")
+
+    memberParams = [[0, 3, 6], [3, 6, 9], [6, 9, 10]]
+    mf_type = "trimf"
+    variable_service.createMembership(memberParams, mf_type)
+
+    assert len(variable_service.variable.membership) == len(memberParams)
+
+def test_setVarUniverse_valid(variable_service):
+    variable_service.createVariable("test_variable")
+    params = [0, 10, 1]
+    variable_service.setVarUniverse(params)
+    np.testing.assert_array_equal(
+        variable_service.variable.varUniverse,
+        np.arange(0, 10, 1)
     )
-    assert isinstance(var.fuzzy_variable, Consequent)
-    assert hasattr(var.fuzzy_variable, 'universe')
+
+def test_setVarUniverse_invalid(variable_service):
+    variable_service.createVariable("test_variable")
+    with pytest.raises(ValueError):
+        variable_service.setVarUniverse([10, 0, 1])
+
+def test_setMemberUniverse_valid(variable_service):
+    # Must set mf_type before validating membership universe
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+
+    params = [[0, 3, 6], [3, 6, 9], [6, 9, 10]]
+    variable_service.setMemberUniverse(params)
+    assert variable_service.variable.memberUniverse == params
+
+def test_setMemberUniverse_invalid(variable_service):
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+    with pytest.raises(ValueError):
+        # wrong lengths vs EXPECTED_MF_LENGTH
+        variable_service.setMemberUniverse([[0,1], [1,2], [2,3]])
+
+def test_setVarType_valid(variable_service):
+    variable_service.createVariable("test_variable")
+    variable_service.setVarType("antecedent")
+    assert variable_service.variable.varType == "antecedent"
+
+def test_setVarType_invalid(variable_service):
+    variable_service.createVariable("test_variable")
+    with pytest.raises(ValueError):
+        variable_service.setVarType("invalidType")
+
+def test_setMfType_valid(variable_service):
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+    assert variable_service.variable.mf_type == "trimf"
+
+def test_setMfType_invalid(variable_service):
+    variable_service.createVariable("test_variable")
+    with pytest.raises(ValueError):
+        variable_service.setMfType("invalidMf")
+
+def test_isValidVarParam_valid(variable_service):
+    assert variable_service.isValidVarParam([0, 10, 1])
+
+def test_isValidVarParam_invalid_length(variable_service):
+    with pytest.raises(ValueError):
+        variable_service.isValidVarParam([0, 10])
+
+def test_isValidVarParam_invalid_range(variable_service):
+    with pytest.raises(ValueError):
+        variable_service.isValidVarParam([10, 0, 1])
+
+def test_isValidVarParam_invalid_step_size(variable_service):
+    with pytest.raises(ValueError):
+        variable_service.isValidVarParam([0, 10, 15])
+
+def test_isValidMemberParam_valid(variable_service):
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+    params = [[0, 3, 6], [3, 6, 9], [6, 9, 10]]
+    assert variable_service.isValidMemberParam(params)
+
+def test_isValidMemberParam_invalid_length(variable_service):
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+    with pytest.raises(ValueError):
+        variable_service.isValidMemberParam([[0, 3, 6], [3, 6, 9]])
+
+def test_isValidMemberParam_invalid_order(variable_service):
+    variable_service.createVariable("test_variable")
+    variable_service.setMfType("trimf")
+    with pytest.raises(ValueError):
+        variable_service.isValidMemberParam([[0, 6, 3], [3, 6, 9], [6, 9, 10]])
+
+def test_isValidVarType_invalid(variable_service):
+    with pytest.raises(ValueError):
+        variable_service.isValidVarType("invalidType")
+
+def test_isValidMfType_invalid(variable_service):
+    with pytest.raises(ValueError):
+        variable_service.isValidMfType("invalidMf")
