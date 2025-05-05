@@ -14,7 +14,7 @@ class VariableService:
         self.createVariable(name)
         self.createFuzzyVariable(varParams, varType)
         self.createMembership(memberParams,mf_type)
-        self.saveFuzzyVariable(self.variable)
+        self.variables.append(self.variable)
         return self.variable
 
     def createVariable(self, name):
@@ -39,13 +39,10 @@ class VariableService:
         for ordinal, param in zip(VARIABLE_MEMBERSHIP_ORDINALS, memberParams):
             if self.variable.mf_type == 'trimf':
                 self.variable.fuzzy_variable[ordinal] = fuzz.trimf(self.variable.fuzzy_variable.universe, param)
-            elif sel.variable.mf_type == 'trapmf':
+            elif self.variable.mf_type == 'trapmf':
                 self.variable.fuzzy_variable[ordinal] = fuzz.trapmf(self.variable.fuzzy_variable.universe, param)
             
             self.variable.membership.append(self.variable.fuzzy_variable[ordinal])
-
-    def saveFuzzyVariable(self,variable):
-        self.variables.append(variable)
 
     ################# SETTER SERVICE ##################
     def setVarUniverse(self, params):
