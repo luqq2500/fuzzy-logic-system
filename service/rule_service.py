@@ -1,7 +1,7 @@
 import skfuzzy as fuzz
 import skfuzzy.control as controller
 from config.configs import OPERATORS
-from service.rule_service import VariableService
+from service.variable_service import VariableService
 
 class RuleService:
     def __init__(self, rule):
@@ -9,5 +9,5 @@ class RuleService:
 
     # antecedentParams = [var['ordinal], logic, var['ordinal']]
     def createRule(self, antecedentParams, consequent):
-        self.rule.Rule = controlller.Rule(antecedentParams, conseqent)
+        self.rule.Rule = controller.Rule(antecedentParams, consequent)
         return self.rule.Rule

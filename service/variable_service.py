@@ -28,9 +28,9 @@ class VariableService:
         varType = self.variable.getVarType()
         name = self.variable.getVarName()
 
-        if (varType.lower() == 'antecedent'):
+        if varType.lower() == 'antecedent':
             self.variable.fuzzy_variable = controller.Antecedent(varUniverse, name)
-        elif (varType.lower() == 'consequent'):
+        elif varType.lower() == 'consequent':
             self.variable.fuzzy_variable = controller.Consequent(varUniverse, name)
     
     def createMembership(self, memberParams, mf_type):
@@ -46,45 +46,42 @@ class VariableService:
 
     ################# SETTER SERVICE ##################
     def setVarUniverse(self, params):
-        if (self.isValidVarParam(params)):
+        if self.isValidVarParam(params):
             self.variable.varUniverse = np.arange(params[0], params[1], params[2])
         else:
             raise ValueError('Variable universe is invalid.')
 
     def setMemberUniverse(self, params):
-        if (self.isValidMemberParam(params)):
+        if self.isValidMemberParam(params):
             self.variable.memberUniverse = params
         else:
             raise ValueError('Membership universe incomplete.')
     
     def setVarType(self, varType):
-        if (self.isValidVarType(varType)):
+        if self.isValidVarType(varType):
             self.variable.varType = varType.lower()
         else:
             raise ValueError(f'{varType} is not valid. Please choose one from {VARIABLE_TYPE}')
 
     def setMfType(self, mf_type):
-        if (self.isValidMfType(mf_type)):
+        if self.isValidMfType(mf_type):
             self.variable.mf_type = mf_type.lower()
         else:
             raise ValueError(f'Invalid membership function type. Choose one from {MEMBERSHIP_FUNCTIONS}')
 
     ############## VALIDATION SERVICE #################
-    def isValidVarParam(self, params):
+    @staticmethod
+    def isValidVarParam(params):
         if len(params) != 3:
             raise ValueError(f'Variable universe {params} must contain exactly 3 values: [start, stop, step].')
-            return False
-        if (params[0]>params[1]):
+        if params[0]>params[1]:
             raise ValueError(f'Variable universe start value {params[0]} must be less than stop value {params[1]}.')
-            return False
-        if (params[2]>(params[1]-params[0])):
+        if params[2]>(params[1] - params[0]):
             raise ValueError(f'Step size {params[2]} is too large for the given range [{params[0]}, {params[1]}].')
-            return False
         for param in params:
             if isinstance(param, float):
                 raise ValueError(f'All variable universe parameters must be integers. Got float: {param}')
-                return False
-        return True 
+        return True
 
     def isValidMemberParam(self, params):
         mf_type = self.variable.getMfType()
@@ -103,13 +100,14 @@ class VariableService:
         
         return True
 
-    def isValidVarType(self, varType):
+    @staticmethod
+    def isValidVarType(varType):
         if varType.lower() not in VARIABLE_TYPE:
            raise ValueError(f'Variable type "{varType}" is not valid. Must be one of {VARIABLE_TYPE}.')
         return True
 
-    def isValidMfType(self, mf_type):
+    @staticmethod
+    def isValidMfType(mf_type):
         if mf_type.lower() not in MEMBERSHIP_FUNCTIONS:
             raise ValueError(f'Membership function type "{mf_type}" is not supported. Use one of {MEMBERSHIP_FUNCTIONS}.')
         return True
-    

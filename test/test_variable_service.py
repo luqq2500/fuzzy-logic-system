@@ -5,7 +5,8 @@ from service.variable_service import VariableService
 def variable_service():
     return VariableService()
 
-def test_pass_initalizeFuzzyVariable(variable_service):
+
+def test_pass_initializeFuzzyVariable(variable_service):
     name = 'pass'
     varParams = (0, 101, 1)
     memberParams = [[0, 3, 6], [3, 6, 9], [6, 9, 10]]
@@ -14,7 +15,7 @@ def test_pass_initalizeFuzzyVariable(variable_service):
     variable_service.initiateFuzzyVariable(name, varParams, memberParams, varType, mf_type)
     
 
-def test_fail_initiateFuzzyVariable(variable_service):
+def test_fail_initializeFuzzyVariable(variable_service):
     name = 'test_variable'
     varParams = (2, 5, 20)
     memberParams = [[3, 4, 5], [8, 7, 6, 9], [9, 8, 7, 6]]
