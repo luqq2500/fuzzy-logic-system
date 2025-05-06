@@ -5,7 +5,6 @@ class ControlSystemService:
     def __init__(self, variable_service):
         self.variable_service = variable_service
         self.controlSystem = None
-        self.controlSystems = {}
 
     # ============ C O R E ============== #
     def createControlSystem(self, name, variables, rules):
@@ -14,11 +13,10 @@ class ControlSystemService:
         self.setControlSystemRules(rules)
         self.controlSystem.controlSystem = controller.ControlSystem(self.controlSystem.rules)
         self.controlSystem.controlSystemSimulation = controller.ControlSystemSimulation(self.controlSystem.controlSystem)
+        return self.controlSystem
 
-    # parameter: list of tuples (variable_name, int)
-    def setInputControlSystem(self, variableObjectAndValueList):
-        simulation = self.controlSystem.controlSystemSimulation
-        for variable_name, value in variableObjectAndValueList:
+    def setInputControlSystem(self, simulation, tupleVariableNameValue):
+        for variable_name, value in tupleVariableNameValue:
             if self.isInputVariableValid(variable_name):
                 simulation.input[variable_name] = value
                 self.controlSystem.inputs.append({variable_name: value})
@@ -30,12 +28,11 @@ class ControlSystemService:
         variableName = self.controlSystem.name
         return self.controlSystem.controlSystemSimulation.output[variableName]
 
-
-    # ========== N O N - C O R E ========== #
     def startControlSystem(self, name):
         self.controlSystem = ControlSystem(name)
 
-    # take set of variable objects: (var, var)
+
+    # ====== S E T T E R ====== #
     def setVariables(self, variables):
         for variable in variables:
             self.controlSystem.variables.append(variable)
@@ -48,6 +45,8 @@ class ControlSystemService:
         controlSystem = self.controlSystem.controlSystem
         self.controlSystem.controlSystemSimulation = controller.ControlSystemSimulation(controlSystem)
 
+
+    # ====== V A L I D A T I O N ====== #
     def isInputVariableValid(self, variable_name):
         for variable in self.controlSystem.variables:
             if self.variable_service.getVariableByName(variable_name) == variable:
