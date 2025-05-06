@@ -9,7 +9,7 @@ class VariableService:
         self.variable = None
         self.variables = []
 
-    ################# CORE SERVICE ####################
+    # ============ C O R E ============== #
     def startVariable(self, name):
         self.variable = Variable(name)
 
@@ -37,10 +37,25 @@ class VariableService:
 
             self.variable.membership.append(self.variable.fuzzy_variable[ordinal])
 
-    def saveVariable(self, variable):
-        self.variables.append(variable)
+    def getVariableByName(self, variableName):
+        for variable in self.variables:
+            if variableName == variable.name:
+                return variable
+        raise ValueError(f'Variable {variableName} not found in registered variable list.')
 
-    ################# SETTER SERVICE ##################
+    def saveVariable(self):
+        self.variables.append(self.variable.fuzzy_variable)
+
+    def getVariable(self):
+        return self.variable.fuzzy_variable
+
+    def isVariableExistByName(self, variable_name):
+        for variable in self.variables:
+            if variable.name == variable_name:
+                return True
+        return False
+
+    # ========== N O N - C O R E ========== #
     def setVarUniverse(self, params):
         if self.isValidVarParam(params):
             self.variable.varUniverse = np.arange(params[0], params[1], params[2])
@@ -65,18 +80,6 @@ class VariableService:
         else:
             raise ValueError(f'Invalid membership function type. Choose one from {MEMBERSHIP_FUNCTIONS}')
 
-    ############## GETTER SERVICE #################
-
-    def getVariable(self):
-        return self.variable.fuzzy_variable
-
-    def getVariableByName(self, variableName):
-        for variable in self.variables:
-            if variableName == variable.name:
-                return variable
-        raise ValueError(f'Variable {variableName} not found in registered variable list.')
-
-    ############## VALIDATION SERVICE #################
     @staticmethod
     def isValidVarParam(params):
         if len(params) != 3:
@@ -95,16 +98,13 @@ class VariableService:
         expected_length = EXPECTED_MF_LENGTH.get(mf_type)
         if expected_length is None:
             raise ValueError(f'Membership function type {mf_type} is not recognized.')
-
+        if len(params) != len(VARIABLE_MEMBERSHIP_ORDINALS):
+            raise ValueError(f'Number of membership params ({len(params)}) does not match expected ordinals ({len(VARIABLE_MEMBERSHIP_ORDINALS)}).')
         for i, param in enumerate(params):
             if len(param) != expected_length:
                 raise ValueError(f'Membership param at index {i} is invalid. Expected {expected_length} values, got {len(param)}: {param}')
             if any(param[j] > param[j + 1] for j in range(len(param) - 1)):
                 raise ValueError(f'Membership values at index {i} are not in non-decreasing order: {param}')
-        
-        if len(params) != len(VARIABLE_MEMBERSHIP_ORDINALS):
-                raise ValueError(f'Number of membership params ({len(params)}) does not match expected ordinals ({len(VARIABLE_MEMBERSHIP_ORDINALS)}).')
-        
         return True
 
     @staticmethod
@@ -118,9 +118,3 @@ class VariableService:
         if mf_type.lower() not in MEMBERSHIP_FUNCTIONS:
             raise ValueError(f'Membership function type "{mf_type}" is not supported. Use one of {MEMBERSHIP_FUNCTIONS}.')
         return True
-
-    def isFuzzyVariableExist(self, variable_name):
-        for variable in self.variables:
-            if variable.name == variable_name:
-                return True
-        raise ValueError(f'Variable "{variable_name}" does not exist.')

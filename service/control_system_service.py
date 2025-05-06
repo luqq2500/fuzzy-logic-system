@@ -1,32 +1,19 @@
 import skfuzzy.control as controller
 from models.controlSystem import ControlSystem
-from service.variable_service import VariableService
-
-variable_service = VariableService()
 
 class ControlSystemService:
-    def __init__(self):
+    def __init__(self, variable_service):
+        self.variable_service = variable_service
         self.controlSystem = None
         self.controlSystems = {}
 
-    def startControlSystem(self, name):
-        self.controlSystem = ControlSystem(name)
-
-    # take set of variable objects: (var, var)
-    def setVariable(self, variable):
-        self.controlSystem.variables.append(variable)
-
-    def setControlSystemRules(self, rules):
-        for rule in rules:
-            self.controlSystem.rules.append(rule)
-
-    def setControlSystem(self):
-        rules = self.controlSystem.rules
-        self.controlSystem.controlSystem = controller.ControlSystem(rules)
-
-    def setControlSystemSimulation(self):
-        controlSystem = self.controlSystem.controlSystem
-        self.controlSystem.controlSystemSimulation = controller.ControlSystemSimulation(controlSystem)
+    # ============ C O R E ============== #
+    def createControlSystem(self, name, variables, rules):
+        self.startControlSystem(name)
+        self.setVariables(variables)
+        self.setControlSystemRules(rules)
+        self.controlSystem.controlSystem = controller.ControlSystem(self.controlSystem.rules)
+        self.controlSystem.controlSystemSimulation = controller.ControlSystemSimulation(self.controlSystem.controlSystem)
 
     # parameter: list of tuples (variable_name, int)
     def setInputControlSystem(self, variableObjectAndValueList):
@@ -36,18 +23,33 @@ class ControlSystemService:
                 simulation.input[variable_name] = value
                 self.controlSystem.inputs.append({variable_name: value})
 
-    def isInputVariableValid(self, variable_name):
-        for variable in self.controlSystem.variables:
-            if variable_service.getVariableByName(variable_name) == variable:
-                return True
-        return False
-
     def compute(self):
         self.controlSystem.controlSystemSimulation.compute()
 
-    def getComputeResult(self, variableName):
-        if not variable_service.getVariableByName(variableName):
-            raise ValueError(f'Variable {variableName} does not exist')
-        if self.controlSystem.controlSystemSimulation.output[variableName] is None:
-            raise ValueError(f'Result for variable {variableName} does not exist')
-        return self.controlSystem.controlSystemSimulation.output(variableName)
+    def getComputeResult(self):
+        variableName = self.controlSystem.name
+        return self.controlSystem.controlSystemSimulation.output[variableName]
+
+
+    # ========== N O N - C O R E ========== #
+    def startControlSystem(self, name):
+        self.controlSystem = ControlSystem(name)
+
+    # take set of variable objects: (var, var)
+    def setVariables(self, variables):
+        for variable in variables:
+            self.controlSystem.variables.append(variable)
+
+    def setControlSystemRules(self, rules):
+        for rule in rules:
+            self.controlSystem.rules.append(rule)
+
+    def setControlSystemSimulation(self):
+        controlSystem = self.controlSystem.controlSystem
+        self.controlSystem.controlSystemSimulation = controller.ControlSystemSimulation(controlSystem)
+
+    def isInputVariableValid(self, variable_name):
+        for variable in self.controlSystem.variables:
+            if self.variable_service.getVariableByName(variable_name) == variable:
+                return True
+        return False
