@@ -1,3 +1,5 @@
+import numpy as np
+
 VARIABLES = [
     {
         'name': 'temperature',
@@ -8,7 +10,7 @@ VARIABLES = [
             'high': [30, 34, 40, 40]
         },
         'variable_type': 'antecedent',
-        'membership_function': 'trapmf'
+        'membership_function': 'trapmf',
     },
     {
         'name': 'flood',

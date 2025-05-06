@@ -10,17 +10,10 @@ class VariableService:
         self.variables = []
 
     ################# CORE SERVICE ####################
-    def initiateFuzzyVariable(self, name, varParams, memberParams, varType, mf_type):
-        self.createVariable(name)
-        self.createFuzzyVariable(varParams, varType)
-        self.createMembership(memberParams,mf_type)
-        self.variables.append(self.variable)
-        return self.variable
-
-    def createVariable(self, name):
+    def startVariable(self, name):
         self.variable = Variable(name)
 
-    def createFuzzyVariable(self, varParams, varType):    
+    def createFuzzyVariable(self, varParams, varType):
         self.setVarUniverse(varParams)
         self.setVarType(varType)
 
@@ -32,7 +25,7 @@ class VariableService:
             self.variable.fuzzy_variable = controller.Antecedent(varUniverse, name)
         elif varType.lower() == 'consequent':
             self.variable.fuzzy_variable = controller.Consequent(varUniverse, name)
-    
+
     def createMembership(self, memberParams, mf_type):
         self.setMfType(mf_type)
         self.setMemberUniverse(memberParams)
@@ -41,8 +34,11 @@ class VariableService:
                 self.variable.fuzzy_variable[ordinal] = fuzz.trimf(self.variable.fuzzy_variable.universe, param)
             elif self.variable.mf_type == 'trapmf':
                 self.variable.fuzzy_variable[ordinal] = fuzz.trapmf(self.variable.fuzzy_variable.universe, param)
-            
+
             self.variable.membership.append(self.variable.fuzzy_variable[ordinal])
+
+    def saveVariable(self, variable):
+        self.variables.append(variable)
 
     ################# SETTER SERVICE ##################
     def setVarUniverse(self, params):
@@ -56,7 +52,7 @@ class VariableService:
             self.variable.memberUniverse = params
         else:
             raise ValueError('Membership universe incomplete.')
-    
+
     def setVarType(self, varType):
         if self.isValidVarType(varType):
             self.variable.varType = varType.lower()
@@ -68,6 +64,17 @@ class VariableService:
             self.variable.mf_type = mf_type.lower()
         else:
             raise ValueError(f'Invalid membership function type. Choose one from {MEMBERSHIP_FUNCTIONS}')
+
+    ############## GETTER SERVICE #################
+
+    def getVariable(self):
+        return self.variable.fuzzy_variable
+
+    def getVariableByName(self, variableName):
+        for variable in self.variables:
+            if variableName == variable.name:
+                return variable
+        raise ValueError(f'Variable {variableName} not found in registered variable list.')
 
     ############## VALIDATION SERVICE #################
     @staticmethod
@@ -111,3 +118,9 @@ class VariableService:
         if mf_type.lower() not in MEMBERSHIP_FUNCTIONS:
             raise ValueError(f'Membership function type "{mf_type}" is not supported. Use one of {MEMBERSHIP_FUNCTIONS}.')
         return True
+
+    def isFuzzyVariableExist(self, variable_name):
+        for variable in self.variables:
+            if variable.name == variable_name:
+                return True
+        raise ValueError(f'Variable "{variable_name}" does not exist.')
