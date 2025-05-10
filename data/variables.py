@@ -3,7 +3,7 @@ import numpy as np
 VARIABLES = [
     {
         'name': 'temperature',
-        'variable_universe': np.arange(0, 41, 1),
+        'variable_universe': [0, 41, 1],
         'membership_universe': {
             'low': [0, 0, 20, 25],
             'medium': [22, 26, 30, 34],
@@ -14,7 +14,7 @@ VARIABLES = [
     },
     {
         'name': 'flood',
-        'variable_universe': np.arange(0, 101, 1),
+        'variable_universe': [0, 101, 1],
         'membership_universe': {
             'low': [0, 0, 20, 40],
             'medium': [30, 45, 55, 70],
@@ -25,7 +25,7 @@ VARIABLES = [
     },
     {
         'name': 'population_density',
-        'variable_universe': np.arange(0, 101, 1),
+        'variable_universe': [0, 101, 1],
         'membership_universe': {
             'low': [0, 0, 20, 40],
             'medium': [30, 45, 55, 70],
@@ -36,7 +36,7 @@ VARIABLES = [
     },
     {
         'name': 'socioeconomic_status',
-        'variable_universe': np.arange(0, 101, 1),
+        'variable_universe': [0, 101, 1],
         'membership_universe': {
             'low': [0, 0, 30, 50],
             'medium': [40, 55, 65, 80],
@@ -47,7 +47,7 @@ VARIABLES = [
     },
     {
         'name': 'climate_risk',
-        'variable_universe': np.arange(0, 101, 1),
+        'variable_universe': [0, 101, 1],
         'membership_universe': {
             'low': [0, 0, 20, 40],
             'medium': [35, 50, 60, 75],
@@ -58,7 +58,7 @@ VARIABLES = [
     },
     {
         'name': 'social_vulnerability',
-        'variable_universe': np.arange(0, 101, 1),
+        'variable_universe': [0, 101, 1],
         'membership_universe': {
             'low': [0, 0, 25, 40],
             'medium': [35, 50, 60, 75],
@@ -69,7 +69,7 @@ VARIABLES = [
     },
     {
         'name': 'social_risk',
-        'variable_universe': np.arange(0, 101, 1),
+        'variable_universe': [0, 101, 1],
         'membership_universe': {
             'low': [0, 0, 20, 40],
             'medium': [35, 50, 60, 75],

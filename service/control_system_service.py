@@ -2,8 +2,8 @@ import skfuzzy.control as controller
 from models.controlSystem import ControlSystem
 
 class ControlSystemService:
-    def __init__(self, variable_service):
-        self.variable_service = variable_service
+    def __init__(self, rule_service):
+        self.rule_service = rule_service
         self.controlSystem = None
 
     # ============ C O R E ============== #
@@ -30,7 +30,6 @@ class ControlSystemService:
 
     def startControlSystem(self, name):
         self.controlSystem = ControlSystem(name)
-
 
     # ====== S E T T E R ====== #
     def setVariables(self, variables):

@@ -1,9 +1,10 @@
 class Rule:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.antecedent = []
         self.logic = None
         self.consequent = None
-        self.Rule = None
+        self.rule = None
 
     def getAntecedent(self):
         return self.antecedent
