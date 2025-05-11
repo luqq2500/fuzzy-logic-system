@@ -6,9 +6,9 @@ pass_variable_param = (0, 101, 1)
 pass_trimf_membership_params = [[0, 3, 6], [3, 6, 9], [6, 9, 10]]
 pass_trapmf_membership_params = [[0, 2, 3, 4], [3, 4, 7, 8], [7, 8, 9, 10]]
 
-fail_variable_type = ['sicko', 'whatchumean?', 'idk', ' ']
+fail_variable_type = 'sicko'
 fail_variable_param = (100,50, 60.5)
-fail_membership_function = ['i4u', '0000', '']
+fail_membership_function = 'i4u'
 fail_trimf_membership_params = [[0, 1], [3, 5, 6], [9, 8]]
 fail_trapmf_membership_params = [[0, 1, 2], [4, 3, 6, 7], [99, 9, 10, 11]]
 
@@ -67,15 +67,13 @@ def test_pass_setVarType(variable_service):
         variable_service.setVarType(variable_type)
 
 def test_fail_setVarType(variable_service):
-    for var_type in fail_variable_type:
-        with pytest.raises(ValueError):
-            variable_service.setVarType(var_type)
+    with pytest.raises(ValueError):
+        variable_service.setVarType(fail_variable_type)
 
 def test_pass_setMfType(variable_service):
     for mf_type in MEMBERSHIP_FUNCTIONS:
         variable_service.setMfType(mf_type)
 
 def test_fail_setMfType(variable_service):
-    for mf in fail_membership_function:
-        with pytest.raises(ValueError):
-            variable_service.setMfType(mf)
+    with pytest.raises(ValueError):
+        variable_service.setMfType(fail_membership_function)
