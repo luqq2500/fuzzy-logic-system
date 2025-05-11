@@ -29,8 +29,8 @@ class VariableService:
                 self.variable.fuzzy_variable[ordinal] = fuzz.trapmf(self.variable.fuzzy_variable.universe, values)
             self.variable.membership.append(self.variable.fuzzy_variable[ordinal])
 
-    def getVariable(self):
-        return self.variable
+    def getFuzzyVariable(self):
+        return self.variable.fuzzy_variable
 
     # ====== S E T T E R ====== #
     def setVarUniverse(self, params):
@@ -59,9 +59,10 @@ class VariableService:
 
     # ====== S E R V I C E  V A L I D A T I O N ======= #
     def isValidMemberParam(self, params):
-        expected_length = EXPECTED_MF_LENGTH.get(self.variable.mf_type)
+        mf_type = self.variable.getMfType()
+        expected_length = EXPECTED_MF_LENGTH.get(mf_type)
         if expected_length is None:
-            raise ValueError(f'Membership function type {self.variable.mf_type} is not recognized.')
+            raise ValueError(f'Membership function type {mf_type} is not recognized.')
         if len(params) != len(VARIABLE_MEMBERSHIP_ORDINALS):
             raise ValueError(f'Number of membership params ({len(params)}) does not match expected ordinals ({len(VARIABLE_MEMBERSHIP_ORDINALS)}).')
         for i, param in enumerate(params):

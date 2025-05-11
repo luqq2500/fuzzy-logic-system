@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49529651-e2cd-4749-9a49-e506c7d7f305" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/validation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/rule_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/variables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/rule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/variable.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/variable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/control_system_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/control_system_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/validation.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/validation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/variable_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/variable_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_variable_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_variable_service.py" afterDir="false" />
     </list>
@@ -58,9 +52,24 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python tests.Python tests for test_variable_service.test_fail_createMembership.executor": "Run",
     "Python tests.Python tests for test_variable_service.test_fail_createVariable.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_getFuzzyVariable.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_setMemberUniverse.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_setMfType.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_setVarType.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_setVarUniverse.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_trapmf_createMembership.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_fail_trimf_createMembership.executor": "Run",
     "Python tests.Python tests for test_variable_service.test_pass_createMembership.executor": "Run",
     "Python tests.Python tests for test_variable_service.test_pass_createVariable.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_pass_getFuzzyVariable.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_pass_setMemberUniverse.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_pass_setMfType.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_pass_setVarUniverse.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_pass_trapmf_createMembership.executor": "Run",
+    "Python tests.Python tests for test_variable_service.test_pass_trimf_createMembership.executor": "Run",
+    "Python tests.Python tests in test_variable_service.py.executor": "Run",
     "Python.cli.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -78,8 +87,8 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test_variable_service.test_pass_createMembership">
-    <configuration name="Python tests for test_variable_service.test_fail_createVariable" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for test_variable_service.test_fail_setMemberUniverse">
+    <configuration name="Python tests for test_variable_service.test_fail_createMembership" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="fuzzy-logic-system" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -91,11 +100,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_variable_service.test_fail_createVariable&quot;" />
+      <option name="_new_target" value="&quot;test_variable_service.test_fail_createMembership&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_variable_service.test_pass_createMembership" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_variable_service.test_fail_setMemberUniverse" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="fuzzy-logic-system" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -107,11 +116,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_variable_service.test_pass_createMembership&quot;" />
+      <option name="_new_target" value="&quot;test_variable_service.test_fail_setMemberUniverse&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_variable_service.test_pass_createVariable" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_variable_service.test_fail_setMfType" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="fuzzy-logic-system" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -123,15 +132,49 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_variable_service.test_pass_createVariable&quot;" />
+      <option name="_new_target" value="&quot;test_variable_service.test_fail_setMfType&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_variable_service.test_fail_setVarType" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="fuzzy-logic-system" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_variable_service.test_fail_setVarType&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_variable_service.test_pass_setMfType" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="fuzzy-logic-system" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_variable_service.test_pass_setMfType&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_variable_service.test_pass_createMembership" />
-        <item itemvalue="Python tests.Python tests for test_variable_service.test_fail_createVariable" />
-        <item itemvalue="Python tests.Python tests for test_variable_service.test_pass_createVariable" />
+        <item itemvalue="Python tests.Python tests for test_variable_service.test_fail_setMemberUniverse" />
+        <item itemvalue="Python tests.Python tests for test_variable_service.test_fail_setMfType" />
+        <item itemvalue="Python tests.Python tests for test_variable_service.test_pass_setMfType" />
+        <item itemvalue="Python tests.Python tests for test_variable_service.test_fail_setVarType" />
+        <item itemvalue="Python tests.Python tests for test_variable_service.test_fail_createMembership" />
       </list>
     </recent_temporary>
   </component>
@@ -160,7 +203,8 @@
       <workItem from="1746533831543" duration="411000" />
       <workItem from="1746581226138" duration="4855000" />
       <workItem from="1746866300976" duration="2995000" />
-      <workItem from="1746913973309" duration="2219000" />
+      <workItem from="1746913973309" duration="2586000" />
+      <workItem from="1746926198621" duration="10806000" />
     </task>
     <servers />
   </component>
@@ -169,7 +213,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/fuzzy_logic_system$cli.coverage" NAME="cli Coverage Results" MODIFIED="1746519696920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/presentation" />
-    <SUITE FILE_PATH="coverage/fuzzy_logic_system$.coverage" NAME=" Coverage Results" MODIFIED="1746915973189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/fuzzy_logic_system$.coverage" NAME=" Coverage Results" MODIFIED="1746936663652" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/fuzzy_logic_system$main.coverage" NAME="main Coverage Results" MODIFIED="1746587211756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -1,13 +1,13 @@
 from config.configs import VARIABLE_TYPE, MEMBERSHIP_FUNCTIONS
 
-
 def isValidVarType(varType):
     if varType.lower() not in VARIABLE_TYPE:
         raise ValueError(f'Variable type "{varType}" is not valid. Must be one of {VARIABLE_TYPE}.')
     return True
 
-
 def isValidVarParam(params):
+    if not isinstance(params, (list, tuple)):
+        raise TypeError(f'Variable universe must be a list or tuple of three values: [start, stop, step]. Got {type(params).__name__}: {params}')
     if len(params) != 3:
         raise ValueError(f'Variable universe {params} must contain exactly 3 values: [start, stop, step].')
     if params[0]>params[1]:
