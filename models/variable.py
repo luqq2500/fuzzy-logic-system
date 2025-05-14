@@ -6,7 +6,7 @@ class Variable:
         self.membership_universe = []
         self.mf_type = None
         self.fuzzy_variable = None
-        self.membership = []
+        self.memberships = []
 
     def getVarName(self):
         return self.name
@@ -27,6 +27,6 @@ class Variable:
         return self.mf_type
 
     def getMembership(self):
-        return self.membership
+        return self.memberships
     
  

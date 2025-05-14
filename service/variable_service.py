@@ -27,7 +27,7 @@ class VariableService:
                 self.variable.fuzzy_variable[ordinal] = fuzz.trimf(self.variable.fuzzy_variable.universe, values)
             elif self.variable.mf_type == 'trapmf':
                 self.variable.fuzzy_variable[ordinal] = fuzz.trapmf(self.variable.fuzzy_variable.universe, values)
-            self.variable.membership.append(self.variable.fuzzy_variable[ordinal])
+            self.variable.memberships.append(self.variable.fuzzy_variable[ordinal])
 
     def getFuzzyVariable(self):
         return self.variable.fuzzy_variable
@@ -35,19 +35,19 @@ class VariableService:
     # ====== S E T T E R ====== #
     def setVarUniverse(self, params):
         if isValidVarParam(params):
-            self.variable.varUniverse = np.arange(params[0], params[1], params[2])
+            self.variable.variable_universe = np.arange(params[0], params[1], params[2])
         else:
             raise ValueError('Variable universe is invalid.')
 
     def setMemberUniverse(self, params):
         if self.isValidMemberParam(params):
-            self.variable.memberUniverse = params
+            self.variable.membership_universe = params
         else:
             raise ValueError('Membership universe incomplete.')
 
     def setVarType(self, varType):
         if isValidVarType(varType):
-            self.variable.varType = varType.lower()
+            self.variable.variable_type = varType.lower()
         else:
             raise ValueError(f'{varType} is not valid. Please choose one from {VARIABLE_TYPE}')
 
